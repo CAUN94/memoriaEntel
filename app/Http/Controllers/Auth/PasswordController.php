@@ -1,5 +1,9 @@
 <?php
 
+/*
+Password, esto no se toca.
+*/
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;

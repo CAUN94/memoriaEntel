@@ -1,5 +1,5 @@
 <?php
-
+// Creacion de db reports tiene todos los datos de la tabla
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -12,6 +12,7 @@ class CreateReportsTable extends Migration
      */
     public function up()
     {
+        // Info para crear la db, se necesitas todos los datos a menos que especifique que es nullable
         Schema::create('reports', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->index();

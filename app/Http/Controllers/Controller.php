@@ -1,5 +1,9 @@
 <?php
 
+/*
+Esto no se toca
+*/
+
 namespace App\Http\Controllers;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;

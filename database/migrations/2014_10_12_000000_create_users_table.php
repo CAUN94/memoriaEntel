@@ -1,5 +1,5 @@
 <?php
-
+// Creacion de db users
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -12,6 +12,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        // Info para crear la db, se necesitas todos los datos a menos que especifique que es nullable
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');

@@ -1,4 +1,8 @@
 <?php
+/*
+Controla las paginas que tienen que ver con reportes.
+*/
+
 
 namespace App\Http\Controllers;
 
@@ -14,29 +18,30 @@ use Auth;
 class ReportController extends Controller
 {
 
-	public function __construct()
+	public function __construct()  
     {
-        $this->middleware('auth');
+        $this->middleware('auth'); // Revisa que el usuario este logeado
     }
 
     public function index(Report $Report)
     {	
-        $User=User::where('id',$Report->user_id)->get();
-        $admin=Auth::user();
-    	return view('report.index',compact('Report','User','admin'));
+        $User=User::where('id',$Report->user_id)->get(); // Informacion del usuario que hizo el reporte
+        $admin=Auth::user(); // Informacion del administrador de reporte
+    	return view('report.index',compact('Report','User','admin')); // Retorna a la carpeta report a la pagina index.blade con array de Report User y Admin
     }
 
     public function update()
     {
-        $User=Auth::user();
-        if($User->admin==1)
+        $User=Auth::user(); // Informacion del usuario logeado
+        if($User->admin==1) // Si es admin
         {
-        $Reports=Report::where('Status',1)
+        $Reports=Report::where('Status',1) // Muestra los reportes a los que se les solocito Status
                 ->orderBy('Progress','desc')
-                ->get();
+                ->get(); 
         }
         else
         {
+        // Muestra los reportes a los que el admin solicito Status
         $Reports=Report::where('user_id',$User->id)
                 ->where('Status',1)
                 ->orderBy('Progress','desc')
@@ -47,28 +52,30 @@ class ReportController extends Controller
 
 
 
-        return view('report.update',compact('Reports'));
+        return view('report.update',compact('Reports')); // Retorna a la carpeta report a la pagina update.blade y compacta el arreglo Reports
     }
 
     public function form(Report $Report)
     {
+        //Retorna la info del Report para modificarla en un formulaio en la pagina formo dentro de la carptea report 
          return view('report.form',compact('Report'));
     }
 
     public function save(Report $Report,Request $request)
     {   
-         
+         // Recupera los valores del Post del formulario
+        // Y la Info del Report modificado
 
-         $Report->Status=0;
-         $Report->Progress=$request->progress;
-         $Report->save();
-         return Redirect::to('/Report');
+         $Report->Status=0; // Le Cambia el Status ha revisado
+         $Report->Progress=$request->progress; // Modifica el nuevo proreso
+         $Report->save(); // Guarda
+         return Redirect::to('/Report'); // Redirige a esa pagina
 
     }
 
        public function saveadmin(Report $Report,Request $request)
     {   
-         
+         // Lo mismo que el anterior pero para los admin que pueden modificar más cosas
 
          $Report->Cockpit=$request->Cockpit;
          $Report->Market=$request->Market;
@@ -86,6 +93,7 @@ class ReportController extends Controller
 
     public function updateform(Report $Report)
     {   
+        // El formulario de update del admin
         return view('report.adminupdate',compact('Report'));
     }
 
@@ -93,6 +101,8 @@ class ReportController extends Controller
 
     public function mail(Report $Report)
     {	
+        //Envia un mail, debe estar en un servido para funcionar
+
     	// Mail 
 
    		// $to = 'Paselramo@gmail.com'; 
@@ -102,6 +112,8 @@ class ReportController extends Controller
     	// $headers .= "Reply-To: crugarte@alumnos.uai.cl";    
     	// mail($to,$email_subject,$email_body,$headers);
 
+
+        //Cambia el Status ha solicitado y devuelve a home
     	$Report->Status=1;
     	$Report->save();
         return Redirect::to('/home');

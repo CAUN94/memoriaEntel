@@ -1,4 +1,8 @@
 <?php
+/*
+Importa los valores de excel
+*/
+
 namespace App\Http\Controllers;
  
 use App\Report;
@@ -11,30 +15,22 @@ class ImportController extends Controller
 {
      public function import()
     {
-            // $excel = new SimpleExcel('CSV');
-            // $excel->parser->loadFile('libro1.csv');
-            // $get =  $excel->parser->getRow(1);
-            // if(empty($get))
-            //     return 1;
-            // else
-            //     return var_dump($get);
 
-        $excel = new SimpleExcel('CSV');
-            $excel->parser->loadFile('libro1.csv');
-            $get =  $excel->parser->getColumn(1);
-            $count = count($get);
-            // if($get[3]!=null)
-            // return 'Hola';
-            // else
-            // return 'nada';
+        $excel = new SimpleExcel('CSV'); // Libreria de excel
+            $excel->parser->loadFile('libro1.csv'); // Archivo excel a leer
+            $get =  $excel->parser->getColumn(1); // Toma todos los valores de la columna uno
+            $count = count($get); // Cuenta los valores (para saber el largo del excel)
 
-            for ($i=2; $i<$count;$i++)
+            for ($i=2; $i<$count;$i++) // lee todo el excel parte del 2, porque el 1 son los titulos
             {
                     if($get[$i]!=null)
                     {
-                    $get1 =  $excel->parser->getRow(($i));
-                    if($get1[9]!=null)
+                    $get1 =  $excel->parser->getRow(($i)); //Si el valor de la columna existe entra
+                    if($get1[9]!=null) // Si el valor de la celda que esta leyendo no es nulo entra (para evitar subir lineas vacias)
                     {
+                    // Crea un nuevo reporte utilizando el modelo
+
+                    // Agregua todos los datos
                     $Report= new Report;
                     $Report->user_id = Auth::user()->id;
                     $Report->Cockpit = $get1[4];
@@ -59,7 +55,7 @@ class ImportController extends Controller
                     }
                     
              }
-             return back();
+             return back(); // Retorna a la pagina anterior
 
             }   
         }

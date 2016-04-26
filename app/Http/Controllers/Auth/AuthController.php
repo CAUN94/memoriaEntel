@@ -1,5 +1,9 @@
 <?php
 
+/*
+ Creacion de usuaruis, viene por default en laravel
+*/
+
 namespace App\Http\Controllers\Auth;
 
 use App\User;
@@ -10,17 +14,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it?
-    |
-    */
-
+    
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
@@ -48,6 +42,9 @@ class AuthController extends Controller
      */
     protected function validator(array $data)
     {
+        /*
+        Validacion revisa que el auto este registrado y allá ingresado con sus datos
+        */
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
@@ -64,10 +61,14 @@ class AuthController extends Controller
     protected function create(array $data)
     {
 
+        /*
+        Crea a l usuario, los datos vienen por default en laravel, pero le agregamos phone y requisitos de admin.
+        */
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'password' => bcrypt($data['password']), //encripta la clave
             'phone' => $data['phone'],
             'admin' => 0,
 
