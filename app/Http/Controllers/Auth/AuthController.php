@@ -62,7 +62,7 @@ class AuthController extends Controller
     {
 
         /*
-        Crea a l usuario, los datos vienen por default en laravel, pero le agregamos phone y requisitos de admin.
+        Crea al usuario, los datos vienen por default en laravel, pero le agregamos phone y requisitos de admin.
         */
 
         return User::create([

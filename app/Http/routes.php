@@ -17,7 +17,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/Report/updateadmin/{Report}/save','ReportController@saveadmin'); // Salva los datos
     Route::get('/Report/mail/{Report}','ReportController@mail'); // Envia el mail
     Route::get('/Report/adminupdate/{Report}','ReportController@updateform'); //Form de admin
-	Route::get('import', 'ImportController@import'); // IMporta excel
+	Route::get('import', 'ImportController@import'); // Importa excel
 
 
     
