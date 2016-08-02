@@ -62,4 +62,6 @@ class HomeController extends Controller
         */
         return view('report',compact('Reports','User'));
     }
+
+
 }
